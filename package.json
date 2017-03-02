@@ -1,0 +1,10 @@
+{
+  "name": "simplefw",
+  "version": "0.0.1",
+  "author": "Nick Shvelidze <captain@pirrate.me>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.0",
+    "require-all": "^2.2.0"
+  }
+}
