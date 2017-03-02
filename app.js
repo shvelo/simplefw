@@ -9,7 +9,16 @@ const path = require('path'),
     root = __dirname,
     port = process.env.NODE_PORT || 8008,
     application = requireAll(path.join(root, 'application'), { recursive: true }),
-    config = requireAll(path.join(root, 'config'), { recursive: true });
+    config = requireAll(path.join(root, 'config'), { recursive: true }),
+    simplefw = requireAll(path.join(root, 'simplefw'), { recursive: true });
+
+// Extend with default config
+for(let key in simplefw.config) {
+    if(!simplefw.config.hasOwnProperty(key))
+        continue;
+
+    config[key] = Object.assign(simplefw.config[key], config[key] || {});
+}
 
 global.application = application;
 global.config = config;
