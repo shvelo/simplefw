@@ -1,11 +1,26 @@
 {
   "name": "simplefw",
+  "description": "Simple web framework",
+  "keywords": [
+    "express",
+    "framework",
+    "backend"
+  ],
   "version": "0.0.1",
   "author": "Nick Shvelidze <captain@pirrate.me>",
+  "homepage": "https://github.com/shvelo/simplefw",
+  "bugs": "https://github.com/shvelo/simplefw/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shvelo/simplefw.git"
+  },
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.0",
     "lodash": "^4.17.4",
     "require-all": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=4.8.0"
   }
 }
