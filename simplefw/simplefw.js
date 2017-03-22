@@ -4,16 +4,34 @@ const path = require('path'),
     http = require('http'),
     express = require('express'),
     requireAll = require('require-all'),
+    winston = require('winston'),
     fwRoot = __dirname;
 
+/**
+ * SimpleFW Main
+ */
 const SimpleFW = {
+    /**
+     * Initialize SimpleFW app
+     * @param {String} root path to app
+     */
     init: function (root) {
         const app = express(),
-            router = express.Router(),
-            application = requireAll(path.join(root, 'application'), { recursive: true }),
-            config = requireAll(path.join(root, 'config'), { recursive: true }),
-            fwConfig = requireAll(path.join(fwRoot, 'config'), { recursive: true });
+            router = express.Router();
+        let application, config, fwConfig;
+        winston.cli();
 
+        try {
+            application = requireAll(path.join(root, 'application'), { recursive: true });
+            config = requireAll(path.join(root, 'config'), { recursive: true });
+            fwConfig = requireAll(path.join(fwRoot, 'config'), { recursive: true });
+        } catch (exception) {
+            winston.log('error', "Not a SimpleFW app:", root);
+            winston.log('error', exception);
+            return false;
+        }
+
+        winston.log('info', "Initializing SimpleFW app", root);
 
         // Extend with default config
         for (let key in fwConfig) {
@@ -51,7 +69,7 @@ const SimpleFW = {
                     continue;
                 }
 
-                console.log("Registering route:", key, routes[key]);
+                winston.log('verbose', "Registering route:", key, routes[key]);
 
                 // Split definition: "<method> <path>"
                 let definition = key.split(' '),
@@ -60,7 +78,7 @@ const SimpleFW = {
                     controller = Object.byString(application.controllers, routes[key]);
 
                 if (!controller) {
-                    console.error("ERROR: Controller not found", routes[key]);
+                    winston.log('error', "Controller not found", routes[key]);
                     continue;
                 }
 
@@ -73,7 +91,7 @@ const SimpleFW = {
                 method = method.toLowerCase();
 
                 if (http.METHODS.map(m => m.toLowerCase()).indexOf(method) === -1) {
-                    console.error("ERROR: Unsupported HTTP method:", method);
+                    winston.log('error', "Unsupported HTTP method:", method);
                     continue;
                 }
 
@@ -84,11 +102,11 @@ const SimpleFW = {
 
         const registerMiddleware = function (middleware) {
             middleware.forEach(function (name) {
-                console.log("Registering middleware:", name);
+                winston.log('verbose', "Registering middleware:", name);
 
                 let func = Object.byString(application.middleware, name);
                 if (!func) {
-                    console.error("ERROR: Middleware not found:", name);
+                    winston.log('error', "Middleware not found:", name);
                     return;
                 }
 
@@ -104,7 +122,7 @@ const SimpleFW = {
 
         let port = process.env.NODE_PORT || config.http.port;
 
-        console.log("Listening on", port);
+        winston.log('info', "Listening on", port);
         app.listen(port);
     }
 };
