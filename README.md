@@ -1,7 +1,7 @@
 SimpleFW
 ===
 
-Simple framework/starter project for Node.JS
+Simple back-end web framework for Node.JS
 
 ## This is very incomplete and not usable yet
 

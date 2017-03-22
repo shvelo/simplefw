@@ -1,3 +1,5 @@
 module.exports = {
-    middleware: ['logger']
+    builtinMiddleware: [],
+    middleware: [],
+    port: 8008
 };
