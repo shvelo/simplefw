@@ -56,6 +56,7 @@ const SimpleFW = {
         application.root = root;
         application.logger = winston;
         application.events = new EventEmitter3();
+        application.expressApp = app;
 
         global.application = application;
         global.config = config;
