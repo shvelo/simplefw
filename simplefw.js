@@ -57,9 +57,9 @@ const SimpleFW = {
         application.logger = winston;
         application.events = new EventEmitter3();
         application.expressApp = app;
+        application.config = config;
 
         global.application = application;
-        global.config = config;
 
         router.registerMiddleware(config.http.middleware, application);
         router.registerRoutes(config.routes, application);
