@@ -65,6 +65,9 @@ const SimpleFW = {
         app.use(router);
         app.use(express.static(path.join(root, 'public')));
 
+        app.set('view engine', config.views.engine);
+        app.set('views', path.join(root, config.views.root));
+
         let port = process.env.NODE_PORT || config.http.port;
 
         application.logger.info("Listening on port %s", port);
