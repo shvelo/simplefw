@@ -1,4 +1,4 @@
 module.exports = {
-    engine: 'html',
+    engine: 'ejs',
     root: 'views'
 };
