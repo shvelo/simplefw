@@ -72,6 +72,9 @@ const SimpleFW = {
 
         application.logger.info("Listening on port %s", port);
         app.listen(port);
+
+        if(typeof config.startup === 'function')
+            config.startup(application);
     }
 };
 
