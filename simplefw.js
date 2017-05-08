@@ -6,6 +6,7 @@ const path = require('path'),
     requireAll = require('require-all'),
     winston = require('winston'),
     EventEmitter3 = require('eventemitter3'),
+    bodyParser = require('body-parser'),
     router = require('./lib/router'),
     fwRoot = __dirname;
 
@@ -61,6 +62,9 @@ const SimpleFW = {
 
         router.registerMiddleware(config.http.middleware, application);
         router.registerRoutes(config.routes, application);
+
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: false }));
 
         app.use(router);
         app.use(express.static(path.join(root, 'public')));
