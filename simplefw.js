@@ -63,6 +63,7 @@ const SimpleFW = {
         router.registerMiddleware(config.http.middleware, application);
         router.registerRoutes(config.routes, application);
 
+        app.set('trust proxy', config.http.trustProxy);
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
 
