@@ -73,10 +73,11 @@ const SimpleFW = {
         app.set('view engine', config.views.engine);
         app.set('views', path.join(root, config.views.root));
 
-        let port = process.env.NODE_PORT || config.http.port;
+        let port = process.env.PORT || config.http.port,
+            ip = process.env.IP || config.http.ip;
 
-        application.logger.info("Listening on port %s", port);
-        app.listen(port);
+        application.logger.info("Listening on http://%s:%s", ip, port);
+        app.listen(port, ip);
 
         if(typeof config.startup === 'function')
             config.startup(application);
