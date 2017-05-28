@@ -31,7 +31,7 @@ const SimpleFW = {
             fw = requireAll(path.join(fwRoot, 'fw'), { recursive: true });
             fwConfig = requireAll(path.join(fwRoot, 'config'), { recursive: true });
         } catch (exception) {
-            winston.log('error', "Not a SimpleFW app: %s", root);
+            winston.log('error', "Not a SimpleFW app: '%s'", root);
             winston.log('error', exception);
             return false;
         }
@@ -76,7 +76,7 @@ const SimpleFW = {
         let port = process.env.PORT || config.http.port,
             ip = process.env.IP || config.http.ip;
 
-        application.logger.info("Listening on http://%s:%s", ip, port);
+        application.logger.info("Listening on 'http://%s:%s'", ip, port);
         app.listen(port, ip);
 
         if(typeof config.startup === 'function')
