@@ -8,6 +8,7 @@ const path = require('path'),
     EventEmitter3 = require('eventemitter3'),
     bodyParser = require('body-parser'),
     router = require('./lib/router'),
+    environment = process.env.NODE_ENV,
     fwRoot = __dirname;
 
 /**
@@ -52,11 +53,22 @@ const SimpleFW = {
             application[key] = Object.assign({}, fw[key], application[key] || {});
         }
 
+        if(config[environment]) {
+            // Extend with default config
+            for (let key in config[environment]) {
+                if (!config[environment].hasOwnProperty(key))
+                    continue;
+
+                config[key] = Object.assign({}, config[environment][key], config[key] || {});
+            }
+        }
+
         application.root = root;
         application.logger = config.log.logger || winston;
         application.events = new EventEmitter3();
         application.expressApp = app;
         application.config = config;
+        application.environment = environment;
 
         global.application = application;
 
