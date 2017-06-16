@@ -6,7 +6,7 @@
     "framework",
     "backend"
   ],
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Nick Shvelidze <captain@pirrate.me>",
   "homepage": "https://github.com/shvelo/simplefw",
   "bugs": "https://github.com/shvelo/simplefw/issues",

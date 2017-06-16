@@ -8,7 +8,7 @@ const path = require('path'),
     EventEmitter3 = require('eventemitter3'),
     bodyParser = require('body-parser'),
     router = require('./lib/router'),
-    environment = process.env.NODE_ENV,
+    environment = process.env.NODE_ENV || 'development',
     fwRoot = __dirname;
 
 /**
@@ -37,6 +37,8 @@ const SimpleFW = {
             return false;
         }
 
+        winston.log('info', "Environment: %s", environment);
+
         // Extend with default config
         for (let key in fwConfig) {
             if (!fwConfig.hasOwnProperty(key))
@@ -54,12 +56,12 @@ const SimpleFW = {
         }
 
         if(config[environment]) {
-            // Extend with default config
+            // Extend with environment config
             for (let key in config[environment]) {
                 if (!config[environment].hasOwnProperty(key))
                     continue;
 
-                config[key] = Object.assign({}, config[environment][key], config[key] || {});
+                Object.assign(config[key], config[environment][key]);
             }
         }
 
